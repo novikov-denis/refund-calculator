@@ -67,11 +67,12 @@ document.getElementById('refundForm').addEventListener('submit', function(e) {
     });
 });
 
-function calculateDaysDifference(startDate, endDate) {
+function calculateDaysDifference(startDate, endDate, inclusive = true) {
     const oneDay = 24 * 60 * 60 * 1000; // миллисекунды в одном дне
     const diffTime = endDate - startDate;
     const diffDays = Math.round(diffTime / oneDay);
-    return diffDays;
+    // Если inclusive = true, включаем оба дня (первый и последний)
+    return inclusive ? diffDays + 1 : diffDays;
 }
 
 function displayResults(results) {
