@@ -45,7 +45,8 @@ document.getElementById('refundForm').addEventListener('submit', function(e) {
     const dailyCost = totalCost / totalDays;
     
     // Шаг 3: Рассчитываем количество дней, которые проучился студент
-    const daysStudied = calculateDaysDifference(courseStart, refundDate);
+    // День запроса возврата не считается как день обучения, поэтому inclusive = false
+    const daysStudied = calculateDaysDifference(courseStart, refundDate, false);
     
     // Если студент запросил возврат после окончания курса
     const actualDaysStudied = Math.min(daysStudied, totalDays);
