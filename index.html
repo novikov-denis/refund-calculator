@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор возврата средств</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор возврата средств</h1>
+        <p class="subtitle">Расчет суммы возврата за обучение</p>
+        
+        <form id="refundForm">
+            <div class="form-group">
+                <label for="courseStart">Дата старта курса:</label>
+                <input type="date" id="courseStart" required>
+            </div>
+
+            <div class="form-group">
+                <label for="courseEnd">Дата окончания курса:</label>
+                <input type="date" id="courseEnd" required>
+            </div>
+
+            <div class="form-group">
+                <label for="totalCost">Полная стоимость курса (₽):</label>
+                <input type="number" id="totalCost" min="0" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="refundDate">Дата запроса возврата:</label>
+                <input type="date" id="refundDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="amountPaid">Сумма, оплаченная студентом (₽):</label>
+                <input type="number" id="amountPaid" min="0" step="0.01" required>
+            </div>
+
+            <button type="submit" class="calculate-btn">Рассчитать возврат</button>
+        </form>
+
+        <div id="results" class="results hidden">
+            <h2>Результаты расчета</h2>
+            <div class="result-item">
+                <span class="result-label">Общая длительность курса:</span>
+                <span class="result-value" id="totalDays">-</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Стоимость одного дня:</span>
+                <span class="result-value" id="dailyCost">-</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Дней проучился студент:</span>
+                <span class="result-value" id="daysStudied">-</span>
+            </div>
+            <div class="result-item highlight">
+                <span class="result-label">Открученные деньги:</span>
+                <span class="result-value" id="amountSpent">-</span>
+            </div>
+            <div class="result-item highlight">
+                <span class="result-label">Оплачено студентом:</span>
+                <span class="result-value" id="paidAmount">-</span>
+            </div>
+            <div class="result-item final">
+                <span class="result-label">Сумма к возврату:</span>
+                <span class="result-value" id="refundAmount">-</span>
+            </div>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
