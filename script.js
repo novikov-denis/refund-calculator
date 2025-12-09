@@ -41,8 +41,8 @@ document.getElementById('refundForm').addEventListener('submit', function(e) {
         return;
     }
     
-    // Шаг 2: Рассчитываем стоимость одного дня
-    const dailyCost = totalCost / totalDays;
+    // Шаг 2: Рассчитываем стоимость одного дня (округляем до десятых)
+    const dailyCost = Math.round((totalCost / totalDays) * 10) / 10;
     
     // Шаг 3: Рассчитываем количество дней, которые проучился студент
     // День запроса возврата не считается как день обучения, поэтому inclusive = false
@@ -51,11 +51,11 @@ document.getElementById('refundForm').addEventListener('submit', function(e) {
     // Если студент запросил возврат после окончания курса
     const actualDaysStudied = Math.min(daysStudied, totalDays);
     
-    // Шаг 4: Рассчитываем открученные деньги
-    const amountSpent = dailyCost * actualDaysStudied;
+    // Шаг 4: Рассчитываем открученные деньги (округляем до десятых)
+    const amountSpent = Math.round(dailyCost * actualDaysStudied * 10) / 10;
     
-    // Шаг 5 и 6: Рассчитываем сумму к возврату
-    const refundAmount = amountPaid - amountSpent;
+    // Шаг 5 и 6: Рассчитываем сумму к возврату (округляем до десятых)
+    const refundAmount = Math.round((amountPaid - amountSpent) * 10) / 10;
     
     // Отображаем результаты
     displayResults({
