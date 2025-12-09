@@ -8,67 +8,122 @@
 </head>
 <body>
     <div class="container">
-        <h1>Калькулятор возврата средств</h1>
-        <p class="subtitle">Расчет суммы возврата за обучение</p>
+        <header class="header">
+            <div class="logo">💰</div>
+            <h1>Калькулятор возврата</h1>
+            <p class="subtitle">Расчет суммы возврата за обучение</p>
+        </header>
         
         <form id="refundForm">
-            <div class="form-group">
-                <label for="courseStart">Дата старта курса:</label>
-                <input type="date" id="courseStart" required>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📅</span>
+                    <span class="card-title">Информация о курсе</span>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseStart">Дата старта</label>
+                            <input type="date" id="courseStart" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseEnd">Дата окончания</label>
+                            <input type="date" id="courseEnd" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="totalCost">Полная стоимость курса</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="totalCost" min="0" step="0.01" placeholder="0" required>
+                            <span class="suffix">₽</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="courseEnd">Дата окончания курса:</label>
-                <input type="date" id="courseEnd" required>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">👤</span>
+                    <span class="card-title">Данные студента</span>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="refundDate">Дата запроса возврата</label>
+                        <input type="date" id="refundDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amountPaid">Сумма оплаты студента</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="amountPaid" min="0" step="0.01" placeholder="0" required>
+                            <span class="suffix">₽</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="totalCost">Полная стоимость курса (₽):</label>
-                <input type="number" id="totalCost" min="0" step="0.01" required>
-            </div>
-
-            <div class="form-group">
-                <label for="refundDate">Дата запроса возврата:</label>
-                <input type="date" id="refundDate" required>
-            </div>
-
-            <div class="form-group">
-                <label for="amountPaid">Сумма, оплаченная студентом (₽):</label>
-                <input type="number" id="amountPaid" min="0" step="0.01" required>
-            </div>
-
-            <button type="submit" class="calculate-btn">Рассчитать возврат</button>
+            <button type="submit" class="calculate-btn">
+                <span class="btn-icon">🧮</span>
+                Рассчитать возврат
+            </button>
         </form>
 
-        <div id="results" class="results hidden">
-            <h2>Результаты расчета</h2>
-            <div class="result-item">
-                <span class="result-label">Общая длительность курса:</span>
-                <span class="result-value" id="totalDays">-</span>
-            </div>
-            <div class="result-item">
-                <span class="result-label">Стоимость одного дня:</span>
-                <span class="result-value" id="dailyCost">-</span>
-            </div>
-            <div class="result-item">
-                <span class="result-label">Дней проучился студент:</span>
-                <span class="result-value" id="daysStudied">-</span>
-            </div>
-            <div class="result-item highlight">
-                <span class="result-label">Открученные деньги:</span>
-                <span class="result-value" id="amountSpent">-</span>
-            </div>
-            <div class="result-item highlight">
-                <span class="result-label">Оплачено студентом:</span>
-                <span class="result-value" id="paidAmount">-</span>
-            </div>
-            <div class="result-item final">
-                <span class="result-label">Сумма к возврату:</span>
-                <span class="result-value" id="refundAmount">-</span>
-            </div>
-        </div>
-
         <div id="error" class="error hidden"></div>
+
+        <div id="results" class="results hidden">
+            <div class="results-header">
+                <span class="results-icon">📊</span>
+                <h2>Результаты расчета</h2>
+            </div>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-icon">📆</div>
+                    <div class="result-info">
+                        <span class="result-label">Длительность курса</span>
+                        <span class="result-value" id="totalDays">-</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-icon">💵</div>
+                    <div class="result-info">
+                        <span class="result-label">Стоимость дня</span>
+                        <span class="result-value" id="dailyCost">-</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-icon">📚</div>
+                    <div class="result-info">
+                        <span class="result-label">Дней обучения</span>
+                        <span class="result-value" id="daysStudied">-</span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-icon">💳</div>
+                    <div class="result-info">
+                        <span class="result-label">Оплачено</span>
+                        <span class="result-value" id="paidAmount">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <div class="summary-row spent">
+                    <span class="summary-label">Открученные деньги</span>
+                    <span class="summary-value" id="amountSpent">-</span>
+                </div>
+                <div class="summary-row refund">
+                    <span class="summary-label">💰 Сумма к возврату</span>
+                    <span class="summary-value" id="refundAmount">-</span>
+                </div>
+            </div>
+
+            <button type="button" class="copy-btn" id="copyBtn">
+                📋 Скопировать результат
+            </button>
+        </div>
     </div>
 
     <script src="script.js"></script>

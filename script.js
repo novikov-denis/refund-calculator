@@ -77,6 +77,9 @@ function calculateDaysDifference(startDate, endDate, inclusive = true) {
 }
 
 function displayResults(results) {
+    // Сохраняем результаты для копирования
+    lastResults = results;
+    
     document.getElementById('totalDays').textContent = `${results.totalDays} дней`;
     document.getElementById('dailyCost').textContent = formatCurrency(results.dailyCost);
     document.getElementById('daysStudied').textContent = `${results.daysStudied} дней`;
@@ -106,6 +109,33 @@ function showError(message) {
     errorElement.classList.remove('hidden');
     errorElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
+// Сохраняем последние результаты для копирования
+let lastResults = null;
+
+// Обработчик кнопки копирования
+document.getElementById('copyBtn').addEventListener('click', function() {
+    if (!lastResults) return;
+    
+    const text = `Расчет возврата:
+• Длительность курса: ${lastResults.totalDays} дней
+• Стоимость дня: ${formatCurrency(lastResults.dailyCost)}
+• Дней обучения: ${lastResults.daysStudied} дней
+• Оплачено: ${formatCurrency(lastResults.amountPaid)}
+• Открученные деньги: ${formatCurrency(lastResults.amountSpent)}
+• Сумма к возврату: ${formatCurrency(lastResults.refundAmount)}`;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = '✓ Скопировано!';
+        btn.classList.add('copied');
+        
+        setTimeout(() => {
+            btn.textContent = '📋 Скопировать результат';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+});
 
 // Устанавливаем текущую дату как значение по умолчанию для даты запроса возврата
 document.getElementById('refundDate').valueAsDate = new Date();
