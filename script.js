@@ -6,11 +6,25 @@ document.getElementById('refundForm').addEventListener('submit', function(e) {
     document.getElementById('error').classList.add('hidden');
     
     // Получаем значения из формы
-    const courseStart = new Date(document.getElementById('courseStart').value);
-    const courseEnd = new Date(document.getElementById('courseEnd').value);
-    const refundDate = new Date(document.getElementById('refundDate').value);
+    const courseStart = parseDate(document.getElementById('courseStart').value);
+    const courseEnd = parseDate(document.getElementById('courseEnd').value);
+    const refundDate = parseDate(document.getElementById('refundDate').value);
     const totalCost = parseFloat(document.getElementById('totalCost').value);
     const amountPaid = parseFloat(document.getElementById('amountPaid').value);
+    
+    // Проверка корректности дат
+    if (!courseStart) {
+        showError('Некорректная дата старта курса. Используйте формат дд.мм.гггг');
+        return;
+    }
+    if (!courseEnd) {
+        showError('Некорректная дата окончания курса. Используйте формат дд.мм.гггг');
+        return;
+    }
+    if (!refundDate) {
+        showError('Некорректная дата запроса возврата. Используйте формат дд.мм.гггг');
+        return;
+    }
     
     // Валидация данных
     if (courseEnd <= courseStart) {
@@ -137,5 +151,47 @@ document.getElementById('copyBtn').addEventListener('click', function() {
     });
 });
 
+// Парсинг даты из текста (поддерживает дд.мм.гггг, дд/мм/гггг, гггг-мм-дд)
+function parseDate(dateString) {
+    if (!dateString) return null;
+    
+    dateString = dateString.trim();
+    
+    // Формат дд.мм.гггг или дд/мм/гггг
+    let match = dateString.match(/^(\d{1,2})[\.\/-](\d{1,2})[\.\/-](\d{4})$/);
+    if (match) {
+        const day = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10) - 1; // месяцы с 0
+        const year = parseInt(match[3], 10);
+        const date = new Date(year, month, day);
+        // Проверяем корректность даты
+        if (date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
+            return date;
+        }
+    }
+    
+    // Формат гггг-мм-дд (ISO)
+    match = dateString.match(/^(\d{4})[\.\/-](\d{1,2})[\.\/-](\d{1,2})$/);
+    if (match) {
+        const year = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10) - 1;
+        const day = parseInt(match[3], 10);
+        const date = new Date(year, month, day);
+        if (date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
+            return date;
+        }
+    }
+    
+    return null;
+}
+
+// Форматирование даты в дд.мм.гггг
+function formatDateToString(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+}
+
 // Устанавливаем текущую дату как значение по умолчанию для даты запроса возврата
-document.getElementById('refundDate').valueAsDate = new Date();
+document.getElementById('refundDate').value = formatDateToString(new Date());
